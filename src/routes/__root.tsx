@@ -43,8 +43,8 @@ function RootComponent() {
   return (
     <RootDocument>
       <div className="min-h-screen bg-gray-50">
-        {/* Navigation Header */}
-        <header className="bg-white shadow-sm border-b">
+        {/* Transparent Sticky Navigation Header */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-white/20">
           <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
@@ -52,13 +52,13 @@ function RootComponent() {
               </div>
               <div className="hidden md:block">
                 <div className="ml-10 flex items-baseline space-x-4">
-                  <a href="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href="/" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Home
                   </a>
-                  <a href="/products" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href="/products" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Products
                   </a>
-                  <a href="/about" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                  <a href="/about" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     About
                   </a>
                 </div>
@@ -67,8 +67,8 @@ function RootComponent() {
           </nav>
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1">
+        {/* Main Content with top padding to account for fixed header */}
+        <main className="flex-1 pt-16">
           <Outlet />
         </main>
 
