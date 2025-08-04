@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "@/styles/app.css?url";
+import Navbar from "@/components/navbar";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -31,7 +32,10 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      <div className="min-h-screen ">
+        <Navbar />
+        <Outlet />
+      </div>
     </RootDocument>
   );
 }
