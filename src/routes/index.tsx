@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -23,7 +23,7 @@ function Home() {
           Whether you're looking for a classic design or a modern statement piece, we have something for everyone.
         </p>
         <Button className="bg-primary/80 cursor-pointer mt-8" variant={"default"}>
-          Browse products &gt;
+          <Link to="/products">Browse products</Link>
         </Button>
       </div>
     </div>
