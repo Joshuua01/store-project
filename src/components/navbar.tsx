@@ -9,9 +9,11 @@ export default function Navbar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent w-full flex justify-center items-center">
+    <header className="sticky top-0 left-0 right-0 z-50 bg-transparent w-full flex justify-center items-center">
       <nav className="px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 w-4/5">
-        <h1 className="text-3xl font-bold text-primary">Watches</h1>
+        <h1 className="text-3xl font-bold text-primary cursor-pointer">
+          <Link to="/">Watches</Link>
+        </h1>
         <div className="hidden md:block">
           <Link
             to="/"

@@ -32,7 +32,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <div className="min-h-screen ">
+      <div className="min-h-screen bg-gradient-to-br from-gray-300 to-stone-300 flex flex-col">
         <Navbar />
         <Outlet />
       </div>

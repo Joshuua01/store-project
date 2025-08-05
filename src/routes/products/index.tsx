@@ -5,5 +5,5 @@ export const Route = createFileRoute("/products/")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/products/"!</div>;
+  return <div className="flex-1 bg-gradient-to-br from-gray-300 to-stone-300"></div>;
 }
