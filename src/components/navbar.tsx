@@ -3,10 +3,12 @@ import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { ShoppingCart, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Route } from "@/routes/__root";
 
 export default function Navbar() {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
+  const user = Route.useRouteContext().user;
 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 bg-transparent w-full flex justify-center items-center">
@@ -64,6 +66,7 @@ export default function Navbar() {
           <Button variant={"ghost"} asChild>
             <User strokeWidth={3} size={24} className="w-13 h-13" />
           </Button>
+          <div>{user?.email || "email"}</div>
         </div>
       </nav>
     </header>
