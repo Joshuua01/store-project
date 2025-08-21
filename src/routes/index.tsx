@@ -1,5 +1,5 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -16,7 +16,7 @@ function Home() {
           <img src="/watch.png" alt="Watch" />
         </div>
         <div className="flex-1">
-          <h1 className="text-4xl font-bold text-primary/80">Welcome to Our Watch Store</h1>
+          <h1 className="text-4xl font-bold text-primary">Welcome to Our Watch Store</h1>
           <p className="text-lg text-muted-foreground mt-5">
             Discover the finest collection of watches crafted with precision and style.
           </p>
@@ -26,7 +26,7 @@ function Home() {
           <p className="text-lg text-muted-foreground mt-2">
             Whether you're looking for a classic design or a modern statement piece, we have something for everyone.
           </p>
-          <Button className="bg-primary/80 cursor-pointer mt-8" variant={"default"} size={"lg"}>
+          <Button className="bg-primary cursor-pointer mt-8" variant={"default"} size={"lg"}>
             <Link to="/products">Browse products</Link>
           </Button>
         </div>

@@ -1,10 +1,11 @@
 /// <reference types="vite/client" />
-import type { ReactNode } from "react";
-import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import appCss from "@/styles/app.css?url";
 import Navbar from "@/components/navbar";
+import appCss from "@/styles/app.css?url";
 import { getSupabaseServerClient } from "@/utils/supabase";
+import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 const fetchUser = createServerFn({ method: "GET" }).handler(async () => {
   const supabase = getSupabaseServerClient();
@@ -16,6 +17,7 @@ const fetchUser = createServerFn({ method: "GET" }).handler(async () => {
 
   return {
     email: data.user.email,
+    id: data.user.id,
   };
 });
 
@@ -53,7 +55,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <div className="min-h-screen bg-gradient-to-br from-gray-300 to-stone-300 flex flex-col">
+      <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
         <Outlet />
       </div>
@@ -69,6 +71,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         {children}
+        <Toaster richColors />
         <Scripts />
       </body>
     </html>
