@@ -16,6 +16,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -52,6 +53,11 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/about': typeof AboutIndexRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/about': typeof AboutIndexRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/about/': typeof AboutIndexRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/logout'
     | '/profile'
     | '/register'
+    | '/auth/callback'
     | '/about'
     | '/products'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/logout'
     | '/profile'
     | '/register'
+    | '/auth/callback'
     | '/about'
     | '/products'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/logout'
     | '/profile'
     | '/register'
+    | '/auth/callback'
     | '/about/'
     | '/products/'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   LogoutRoute: typeof LogoutRoute
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
   AboutIndexRoute: typeof AboutIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
 }
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   LogoutRoute: LogoutRoute,
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
   AboutIndexRoute: AboutIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
 }
