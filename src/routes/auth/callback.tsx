@@ -1,24 +1,18 @@
 import { getSupabaseServerClient } from "@/utils/supabase";
-import { createServerClient } from "@supabase/ssr";
-import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
+import { redirect } from "@tanstack/react-router";
+import { createServerFileRoute } from "@tanstack/react-start/server";
 
-// export const oAuthCallbackFn = createServerFn({ method: "GET" })
-//   .validator((data: string) => data)
-//   .handler(async (ctx) => {
-//     if (ctx.data) {
-//       const supabase = getSupabaseServerClient();
-//       const result = await supabase.auth.exchangeCodeForSession(ctx.data);
-//       console.log("OAuth Callback Result:", result);
-//     }
-//   });
+export const ServerRoute = createServerFileRoute("/auth/callback" as never).methods({
+  GET: async ({ request }) => {
+    const url = new URL(request.url);
+    const code = url.searchParams.get("code");
 
-export const Route = createFileRoute("/auth/callback")({
-  loader: async ({ location }) => {
-    console.log("maybe");
-    if (location.search.code) {
+    if (code) {
       const supabase = getSupabaseServerClient();
-      //   await supabase.auth.exchangeCodeForSession(location.search.code);
+      const result = await supabase.auth.exchangeCodeForSession(code);
     }
+    throw redirect({
+      href: "/",
+    });
   },
 });

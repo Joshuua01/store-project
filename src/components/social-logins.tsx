@@ -25,6 +25,14 @@ export default function SocialLogins() {
       window.location.href = response.url;
     }
   };
+
+  const handleFacebookLogin = async () => {
+    const response = await oAuthLoginFn({ data: "facebook" });
+    if (response.url) {
+      window.location.href = response.url;
+    }
+  };
+
   return (
     <>
       <Button variant="outline" onClick={handleGoogleLogin}>
@@ -54,7 +62,7 @@ export default function SocialLogins() {
         </svg>
         Continue with Apple
       </Button>
-      <Button variant="outline">
+      <Button variant="outline" onClick={handleFacebookLogin}>
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
           <linearGradient
             id="Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1"

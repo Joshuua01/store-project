@@ -14,6 +14,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 export default function Navbar() {
   const location = useLocation();
@@ -131,16 +132,25 @@ export default function Navbar() {
           {/* User dropdown */}
           <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild onPointerDown={(e) => e.preventDefault()}>
-              <Button
-                variant="ghost"
-                className="hidden md:flex"
-                onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
-              >
-                <User strokeWidth={3} size={24} />
-              </Button>
+              {user ? (
+                <Avatar
+                  onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
+                  className="cursor-pointer"
+                >
+                  <AvatarFallback>{user.email.slice(0, 1)}</AvatarFallback>
+                </Avatar>
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="hidden md:flex"
+                  onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
+                >
+                  <User strokeWidth={3} size={24} />
+                </Button>
+              )}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Hello!</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {user && (
                 <>

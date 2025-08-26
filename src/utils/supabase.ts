@@ -3,6 +3,11 @@ import { parseCookies, setCookie } from "@tanstack/react-start/server";
 
 export function getSupabaseServerClient() {
   return createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false,
+    },
     cookies: {
       getAll() {
         return Object.entries(parseCookies()).map(([name, value]) => ({
