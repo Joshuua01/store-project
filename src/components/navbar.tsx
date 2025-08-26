@@ -15,6 +15,7 @@ import {
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Avatar, AvatarFallback } from "./ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 export default function Navbar() {
   const location = useLocation();
@@ -137,7 +138,18 @@ export default function Navbar() {
                   onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
                   className="cursor-pointer"
                 >
-                  <AvatarFallback>{user.email.slice(0, 1)}</AvatarFallback>
+                  <AvatarImage src={user.avatarUrl} alt={user.fullName} />
+                  <AvatarFallback>
+                    {user?.fullName
+                      ? user.fullName
+                          .split(" ")
+                          .filter(Boolean)
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join("")
+                          .toUpperCase()
+                      : ""}
+                  </AvatarFallback>
                 </Avatar>
               ) : (
                 <Button
@@ -150,7 +162,7 @@ export default function Navbar() {
               )}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.fullName}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {user && (
                 <>
@@ -159,7 +171,9 @@ export default function Navbar() {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/logout">Logout</Link>
+                    <Link to="/logout" className="text-destructive">
+                      Logout
+                    </Link>
                   </DropdownMenuItem>
                 </>
               )}

@@ -14,12 +14,16 @@ export const Route = createFileRoute("/register")({
 });
 
 interface RegisterForm {
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   repeatPassword: string;
 }
 
 const defaultRegister: RegisterForm = {
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   repeatPassword: "",
@@ -32,6 +36,11 @@ const registerFn = createServerFn({ method: "POST" })
     const { error, data } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
+      options: {
+        data: {
+          full_name: `${formData.firstName} ${formData.lastName}`,
+        },
+      },
     });
 
     if (data.user) {
@@ -64,12 +73,12 @@ function RouteComponent() {
   return (
     <div className="flex flex-1">
       {/* Left column */}
-      <div className="flex-col items-center justify-center w-1/2 hidden md:flex">
+      <div className="flex-col items-center justify-center w-1/2 hidden lg:flex">
         <h1 className="text-xl">Custom content here</h1>
       </div>
 
       {/* Right column */}
-      <div className="flex flex-col items-center justify-center w-full md:w-1/2 gap-8">
+      <div className="flex flex-col items-center justify-center w-full lg:w-1/2 gap-8">
         {/* Header */}
         <div className="w-[70%] text-center">
           <h1 className="text-2xl font-bold">Welcome to our store!</h1>
@@ -83,8 +92,74 @@ function RouteComponent() {
             e.stopPropagation();
             form.handleSubmit();
           }}
-          className="flex flex-col gap-3 w-[70%]"
+          className="flex flex-col gap-2 w-[70%]"
         >
+          <form.Field
+            name="firstName"
+            validators={{
+              onChange: ({ value }) =>
+                !value
+                  ? "A first name is required"
+                  : value.length < 2
+                    ? "First name must be at least 2 characters"
+                    : undefined,
+            }}
+          >
+            {(field) => (
+              <>
+                <Label htmlFor={field.name} className="font-bold text-md">
+                  First name
+                </Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  type="text"
+                  autoComplete="name"
+                />
+                <div className="text-destructive text-sm min-h-5">
+                  {field.state.meta.errors.map((err) => (
+                    <div key={err}>{err}</div>
+                  ))}
+                </div>
+              </>
+            )}
+          </form.Field>
+          <form.Field
+            name="lastName"
+            validators={{
+              onChange: ({ value }) =>
+                !value
+                  ? "A last name is required"
+                  : value.length < 2
+                    ? "Last name must be at least 2 characters"
+                    : undefined,
+            }}
+          >
+            {(field) => (
+              <>
+                <Label htmlFor={field.name} className="font-bold text-md">
+                  Last name
+                </Label>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  type="text"
+                  autoComplete="name"
+                />
+                <div className="text-destructive text-sm min-h-5">
+                  {field.state.meta.errors.map((err) => (
+                    <div key={err}>{err}</div>
+                  ))}
+                </div>
+              </>
+            )}
+          </form.Field>
           <form.Field
             name="email"
             validators={{

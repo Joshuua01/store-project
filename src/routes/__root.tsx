@@ -17,6 +17,8 @@ const fetchUser = createServerFn({ method: "GET" }).handler(async () => {
 
   return {
     email: data.user.email,
+    fullName: data.user.user_metadata.full_name,
+    avatarUrl: data.user.user_metadata.avatar_url,
     id: data.user.id,
   };
 });

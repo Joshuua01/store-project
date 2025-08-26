@@ -56,12 +56,12 @@ function RouteComponent() {
   return (
     <div className="flex flex-1">
       {/* Left column */}
-      <div className="hidden flex-col items-center justify-center md:flex w-1/2">
+      <div className="hidden flex-col items-center justify-center lg:flex w-1/2">
         <h1 className="text-xl">Custom content here</h1>
       </div>
 
       {/* Right column */}
-      <div className="flex flex-col items-center justify-center w-full md:w-1/2 gap-8">
+      <div className="flex flex-col items-center justify-center w-full lg:w-1/2 gap-8">
         {/* Header */}
         <div className="w-[70%] text-center">
           <h1 className="text-2xl font-bold">Welcome to our store!</h1>
