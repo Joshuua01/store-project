@@ -14,6 +14,8 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Avatar, AvatarFallback } from "./ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 export default function Navbar() {
   const location = useLocation();
@@ -131,16 +133,36 @@ export default function Navbar() {
           {/* User dropdown */}
           <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild onPointerDown={(e) => e.preventDefault()}>
-              <Button
-                variant="ghost"
-                className="hidden md:flex"
-                onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
-              >
-                <User strokeWidth={3} size={24} />
-              </Button>
+              {user ? (
+                <Avatar
+                  onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
+                  className="cursor-pointer"
+                >
+                  <AvatarImage src={user.avatarUrl} alt={user.fullName} />
+                  <AvatarFallback>
+                    {user?.fullName
+                      ? user.fullName
+                          .split(" ")
+                          .filter(Boolean)
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join("")
+                          .toUpperCase()
+                      : ""}
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <Button
+                  variant="ghost"
+                  className="hidden md:flex"
+                  onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
+                >
+                  <User strokeWidth={3} size={24} />
+                </Button>
+              )}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>Hello!</DropdownMenuLabel>
+              <DropdownMenuLabel>{user?.fullName}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {user && (
                 <>
@@ -149,7 +171,9 @@ export default function Navbar() {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/logout">Logout</Link>
+                    <Link to="/logout" className="text-destructive">
+                      Logout
+                    </Link>
                   </DropdownMenuItem>
                 </>
               )}
