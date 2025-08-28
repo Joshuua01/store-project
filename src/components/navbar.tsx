@@ -3,6 +3,7 @@ import { Route } from "@/routes/__root";
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
 import { Menu, ShoppingCart, User } from "lucide-react";
 import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -14,8 +15,6 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
 
 export default function Navbar() {
   const location = useLocation();
@@ -138,7 +137,7 @@ export default function Navbar() {
                   onClick={() => (user ? setOpen(!open) : router.navigate({ to: "/login" }))}
                   className="cursor-pointer"
                 >
-                  <AvatarImage src={user.avatarUrl} alt={user.fullName} />
+                  <AvatarImage src={user?.avatarUrl} alt={user?.fullName} />
                   <AvatarFallback>
                     {user?.fullName
                       ? user.fullName
