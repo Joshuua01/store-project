@@ -84,7 +84,7 @@ export default function Navbar() {
                   {user ? (
                     <>
                       <Link
-                        to="/profile"
+                        to="/profile/general"
                         className="text-muted-foreground hover:text-primary px-3 py-2 rounded-md text-md font-medium"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -166,7 +166,7 @@ export default function Navbar() {
               {user && (
                 <>
                   <DropdownMenuItem asChild>
-                    <Link to="/profile">Profile</Link>
+                    <Link to="/profile/general">Profile</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>

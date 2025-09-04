@@ -12,12 +12,16 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfileRouteRouteImport } from './routes/profile/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as ProfileSettingsRouteImport } from './routes/profile/settings'
+import { Route as ProfileOrdersRouteImport } from './routes/profile/orders'
+import { Route as ProfileGeneralRouteImport } from './routes/profile/general'
+import { Route as ProfileAddressRouteImport } from './routes/profile/address'
 import { ServerRoute as AuthCallbackServerRouteImport } from './routes/auth/callback'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -25,11 +29,6 @@ const rootServerRouteImport = createServerRootRoute()
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LogoutRoute = LogoutRouteImport.update({
@@ -40,6 +39,11 @@ const LogoutRoute = LogoutRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRouteRoute = ProfileRouteRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -57,6 +61,26 @@ const AboutIndexRoute = AboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileSettingsRoute = ProfileSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
+const ProfileOrdersRoute = ProfileOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
+const ProfileGeneralRoute = ProfileGeneralRouteImport.update({
+  id: '/general',
+  path: '/general',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
+const ProfileAddressRoute = ProfileAddressRouteImport.update({
+  id: '/address',
+  path: '/address',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
 const AuthCallbackServerRoute = AuthCallbackServerRouteImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
@@ -65,29 +89,41 @@ const AuthCallbackServerRoute = AuthCallbackServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
-  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/profile/address': typeof ProfileAddressRoute
+  '/profile/general': typeof ProfileGeneralRoute
+  '/profile/orders': typeof ProfileOrdersRoute
+  '/profile/settings': typeof ProfileSettingsRoute
   '/about': typeof AboutIndexRoute
   '/products': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
-  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/profile/address': typeof ProfileAddressRoute
+  '/profile/general': typeof ProfileGeneralRoute
+  '/profile/orders': typeof ProfileOrdersRoute
+  '/profile/settings': typeof ProfileSettingsRoute
   '/about': typeof AboutIndexRoute
   '/products': typeof ProductsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
-  '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
+  '/profile/address': typeof ProfileAddressRoute
+  '/profile/general': typeof ProfileGeneralRoute
+  '/profile/orders': typeof ProfileOrdersRoute
+  '/profile/settings': typeof ProfileSettingsRoute
   '/about/': typeof AboutIndexRoute
   '/products/': typeof ProductsIndexRoute
 }
@@ -95,37 +131,49 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/profile'
     | '/login'
     | '/logout'
-    | '/profile'
     | '/register'
+    | '/profile/address'
+    | '/profile/general'
+    | '/profile/orders'
+    | '/profile/settings'
     | '/about'
     | '/products'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/profile'
     | '/login'
     | '/logout'
-    | '/profile'
     | '/register'
+    | '/profile/address'
+    | '/profile/general'
+    | '/profile/orders'
+    | '/profile/settings'
     | '/about'
     | '/products'
   id:
     | '__root__'
     | '/'
+    | '/profile'
     | '/login'
     | '/logout'
-    | '/profile'
     | '/register'
+    | '/profile/address'
+    | '/profile/general'
+    | '/profile/orders'
+    | '/profile/settings'
     | '/about/'
     | '/products/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfileRouteRoute: typeof ProfileRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
-  ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   AboutIndexRoute: typeof AboutIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -161,13 +209,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/logout': {
       id: '/logout'
       path: '/logout'
@@ -180,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -203,6 +251,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/settings': {
+      id: '/profile/settings'
+      path: '/settings'
+      fullPath: '/profile/settings'
+      preLoaderRoute: typeof ProfileSettingsRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
+    '/profile/orders': {
+      id: '/profile/orders'
+      path: '/orders'
+      fullPath: '/profile/orders'
+      preLoaderRoute: typeof ProfileOrdersRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
+    '/profile/general': {
+      id: '/profile/general'
+      path: '/general'
+      fullPath: '/profile/general'
+      preLoaderRoute: typeof ProfileGeneralRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
+    '/profile/address': {
+      id: '/profile/address'
+      path: '/address'
+      fullPath: '/profile/address'
+      preLoaderRoute: typeof ProfileAddressRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
   }
 }
 declare module '@tanstack/react-start/server' {
@@ -217,11 +293,29 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface ProfileRouteRouteChildren {
+  ProfileAddressRoute: typeof ProfileAddressRoute
+  ProfileGeneralRoute: typeof ProfileGeneralRoute
+  ProfileOrdersRoute: typeof ProfileOrdersRoute
+  ProfileSettingsRoute: typeof ProfileSettingsRoute
+}
+
+const ProfileRouteRouteChildren: ProfileRouteRouteChildren = {
+  ProfileAddressRoute: ProfileAddressRoute,
+  ProfileGeneralRoute: ProfileGeneralRoute,
+  ProfileOrdersRoute: ProfileOrdersRoute,
+  ProfileSettingsRoute: ProfileSettingsRoute,
+}
+
+const ProfileRouteRouteWithChildren = ProfileRouteRoute._addFileChildren(
+  ProfileRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfileRouteRoute: ProfileRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
-  ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   AboutIndexRoute: AboutIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
